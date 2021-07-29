@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+   <head lang="en">
+      <meta charset="utf-8" />
+      <title>Mnemonic Seed Analyser & Balances</title>
+      <link rel="stylesheet" href="css/bootstrap.css">
+      <link rel="stylesheet" href="css/app.css">
+      <meta content="Anlayse mnemonic seeds to determine used wallets and their balances" name="description"/>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+      <link rel="stylesheet" href="src/css/all.css" >
+   </head>
+   <body>
+      <section class="container col-md-12">
+         <section class="row main-content">
+            <section class="col-md-3 BIP-settings">
+               <h2 class="section-title" style="color:white"><i class="fas fa-sliders-h"></i>&nbsp; Derivation Path Settings</h2>
+               <ul class="derivation-type nav nav-tabs" role="tablist">
+                  <li id="bip32-tab">
+                     <a href="#bip32" role="tab" data-toggle="tab">BIP32</a>
+                  </li>
+                  <li id="bip44-tab" class="active">
+                     <a href="#bip44" role="tab" data-toggle="tab">BIP44</a>
+                  </li>
+                  <li id="bip49-tab">
+                     <a href="#bip49" role="tab" data-toggle="tab">BIP49</a>
+                  </li>
+                  <li id="bip84-tab">
+                     <a href="#bip84" role="tab" data-toggle="tab">BIP84</a>
+                  </li>
+                  <li id="bip141-tab">
+                     <a href="#bip141" role="tab" data-toggle="tab">BIP141</a>
+                  </li>
+               </ul>
+               <section class="derivation-type tab-content">
+                  <section id="bip32" class="tab-pane">
+                     <form class="form-horizontal" role="form">
+                        <br>
+                        <section class="form-group">
+                           <label for="bip32-client" class="col-sm-3 control-label">Client</label>
+                           <section class="col-sm-9">
+                              <select id="bip32-client" class="client form-control">
+                                 <option value="custom">Custom derivation path</option>
+                                 <!-- populated by javascript -->
+                              </select>
+                           </section>
+                        </section>
+                        <section class="col-md-12">
+                           <section class="checkbox" id="hardened-addresses-checkbox">
+                              <label>
+                              <input class="hardened-addresses" type="checkbox">
+                              <span>Use hardened addresses</span>
+                              </label>
+                           </section>
+                        </section>
+                        <section class="form-group">
+                           <label for="bip32-path" class="col-sm-12 control-label text-left">BIP32 Derivation Path</label>
+                           <section class="col-sm-12">
+                              <input id="bip32-path" type="text" class="path form-control no-bg" style="color:#e67e22" value="m/0">
+                           </section>
+                        </section>
+                        <hr/>
+                        <section class="form-group">
+                           <label for="core-path" class="col-sm-1 control-label"></label>
+                           <section class="col-sm-10 small-note">
+                              <br/>
+                              <p>
+                                 <b>Bitcoin Core:</b> Use path <code>m/0'/0'</code> with hardened addresses.
+                              </p>
+                              <p class="small-note">
+                                 For more info see the
+                                 <a href="https://github.com/bitcoin/bitcoin/pull/8035" target="_blank">Bitcoin Core BIP32 implementation</a>
+                              </p>
+                           </section>
+                           <label for="core-path" class="col-sm-1 control-label"></label>
+                        </section>
+                        <section class="form-group">
+                           <label for="core-path" class="col-sm-1 control-label"></label>
+                           <section class="col-sm-10 small-note">
+                              <p>
+                                 <span><b>MutliBit HD:</b> Use path <code>m/0'/0</code>.</span>
+                                 <span>For change addresses use path <code>m/0'/1</code>.</span>
+                              </p>
+                              <p>
+                                 <span>For more info see</span>
+                                 <a href="https://multibit.org/" target="_blank">MultiBit HD</a>
+                              </p>
+                           </section>
+                           <label for="core-path" class="col-sm-1 control-label"></label>
+                        </section>
+                        <section class="form-group">
+                           <label class="col-sm-1 control-label"></label>
+                           <section class="col-sm-10 small-note">
+                              <p>
+                                 <span><b>Blockchain.info: </b>Use path <code>m/44'/0'/0'</code>.</span>
+                                 <span>Only enter the <code>xpub</code> extended key into block explorer search fields, never the <code>xprv</code> key.</span>
+                              </p>
+                              <p>
+                                 <span>Can be used with</span>:
+                                 <a href="https://blockchain.info/" target="_blank">blockchain.info</a>
+                              </p>
+                           </section>
+                           <label for="core-path" class="col-sm-1 control-label"></label>
+                        </section>
+                     </form>
+                  </section>
+                  <section id="bip44" class="tab-pane active">
+                     <form class="form-horizontal" role="form">
+                        <br>
+                        <section class="col-sm-2"></section>
+                        <section class="col-sm-10">
+                           <p class="small-note">
+                              For more info see the
+                              <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki" target="_blank">BIP44 spec</a>.
+                           </p>
+                        </section>
+                       
+                        <section class="form-group">
+                           <label for="bip44-path" class="col-sm-12 control-label text-left">BIP32 Derivation Path</label>
+                           <section class="col-sm-12">
+                              <input id="bip44-path" type="text" class="path form-control no-bg" style="color:#e67e22" value="m/44'/0'/0'/0" readonly="readonly">
+                           </section>
+                        </section>
+                        <section class="form-group">
+                           <label for="purpose-bip44" class="col-sm-3 control-label">
+                           <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#purpose" target="_blank">Purpose</a>
+                           </label>
+                           <section class="col-sm-9">
+                              <input id="purpose-bip44" type="text" class="purpose form-control derivation-input" value="44" readonly>
+                           </section>
+                        </section>
+                        <section class="form-group">
+                           <label for="coin-bip44" class="col-sm-3 control-label">
+                           <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#registered-coin-types" target="_blank">Coin</a>
+                           </label>
+                           <section class="col-sm-9">
+                              <input id="coin-bip44" type="text" class="coin form-control derivation-input" value="0" readonly>
+                           </section>
+                        </section>
+                        <section class="form-group">
+                           <label for="account-bip44" class="col-sm-3 control-label">
+                           <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#account" target="_blank">Account</a>
+                           </label>
+                           <section class="col-sm-9">
+                              <input id="account-bip44" type="text" class="account form-control derivation-input" value="0">
+                           </section>
+                        </section>
+                        <section class="form-group">
+                           <label for="change-bip44" class="col-sm-3 control-label">
+                           <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#change" target="_blank">External / Internal</a>
+                           </label>
+                           <section class="col-sm-9">
+                              <input id="change-bip44" type="text" class="change form-control derivation-input" value="0">
+                           </section>
+                        </section>
+                        <section class="form-group">
+                           <label class="col-sm-1 control-label">
+                           </label>
+                           <section class="col-sm-10 small-note">
+                              <p><i class="fas fa-info-circle"></i>&nbsp; The account extended keys can be used for importing to most BIP44 compatible wallets, such as mycelium or electrum.</p>
+                           </section>
+                           <label class="col-sm-1 control-label">
+                           </label>
+                        </section>
+                        <hr/>
+                        <section class="form-group">
+                           <label for="account-xprv" class="col-sm-12 control-label text-left">
+                           <span>Account Extended Private Key</span>
+                           </label>
+                           <section class="col-sm-12">
+                              <textarea id="account-xprv-bip44" type="text" class="account-xprv private-data form-control no-bg" style="height:auto;min-height: 90px; overflow:hidden;resize: none;font-size:13px;color:#bdc3c7" readonly data-show-qr autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+                           </section>
+                        </section>
+                        <hr/>
+                        <section class="form-group">
+                           <label for="account-xpub" class="col-sm-12 control-label text-left">
+                           <span>Account Extended Public Key</span>
+                           </label>
+                           <section class="col-sm-12">
+                              <textarea id="account-xpub-bip44" type="text" class="account-xpub form-control no-bg" style="height:auto;min-height: 90px; overflow:hidden;resize: none;font-size:13px;color:#bdc3c7" readonly data-show-qr autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+                           </section>
+                        </section>
+                     </form>
+                  </section>
+                  <!-- END of BIP44 -->
+                  <section id="bip49" class="tab-pane">
+                     <form class="form-horizontal" role="form">
+                        <br>
+                        <section class="unavailable hidden">
+                           <section class="form-group">
+                              <section class="col-sm-2"></section>
+                              <section class="col-sm-10">
+                                 <p>BIP49 is unavailable for this coin.</p>
+                              </section>
+                           </section>
+                        </section>
+                        <section class="available">
+                           <section class="col-sm-2"></section>
+                           <section class="col-sm-10 small-note">
+                              <p>
+                                 For more info see the
+                                 <a href="https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki" target="_blank">BIP49 spec</a>.
+                              </p>
+                           </section>
+                           <section class="form-group">
+                              <label for="bip49-path" class="col-sm-12 control-label no-bg text-left">BIP32 Derivation Path</label>
+                              <section class="col-sm-12">
+                                 <input id="bip49-path" type="text" class="path form-control no-bg" style="color:#e67e22" value="m/49'/0'/0'/0" readonly="readonly">
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="purpose-bip49" class="col-sm-3 control-label">
+                              <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#purpose" target="_blank">Purpose</a>
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="purpose-bip49" type="text" class="purpose form-control derivation-input" value="49" readonly>
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="coin-bip49" class="col-sm-3 control-label">
+                              <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#registered-coin-types" target="_blank">Coin</a>
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="coin-bip49" type="text" class="coin form-control derivation-input" value="0" readonly>
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="account-bip49" class="col-sm-3 control-label">
+                              <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#account" target="_blank">Account</a>
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="account-bip49" type="text" class="account form-control derivation-input" value="0">
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="change-bip49" class="col-sm-3 control-label">
+                              <a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#change" target="_blank">External / Internal</a>
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="change-bip49" type="text" class="change form-control derivation-input" value="0">
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label class="col-sm-1 control-label">
+                              </label>
+                              <section class="col-sm-10 small-note">
+                                 <p><i class="fas fa-info-circle"></i>&nbsp; The account extended keys can be used for importing to most BIP49 compatible wallets.</p>
+                              </section>
+                           </section>
+                           <hr/>
+                           <section class="form-group">
+                              <label for="account-xprv" class="col-sm-12 control-label text-left">
+                              <span>Account Extended Private Key</span>
+                              </label>
+                              <section class="col-sm-12">
+                                 <textarea id="account-xprv-bip49" type="text" class="account-xprv private-data form-control no-bg" readonly data-show-qr autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="height:auto;min-height: 90px; overflow:hidden;resize: none;font-size:13px;color:#bdc3c7" ></textarea>
+                              </section>
+                           </section>
+                           <hr/>
+                           <section class="form-group">
+                              <label for="account-xpub" class="col-sm-12 control-label text-left">
+                              <span>Account Extended Public Key</span>
+                              </label>
+                              <section class="col-sm-12">
+                                 <textarea id="account-xpub-bip49" type="text" class="account-xpub form-control no-bg" readonly data-show-qr autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="height:auto;min-height: 90px; overflow:hidden;resize: none;font-size:13px;color:#bdc3c7"></textarea>
+                              </section>
+                           </section>
+                           <hr/>
+                           <!--  <section class="form-group">
+                              <label class="col-sm-1 control-label">
+                              </label>
+                              <section class="col-sm-10 small-note">
+                                  <p>The BIP32 derivation path and extended keys are the basis for the derived addresses.</p>
+                              </section>
+                              </section> -->
+                        </section>
+                     </form>
+                  </section>
+                  <section id="bip141" class="tab-pane">
+                     <form class="form-horizontal" role="form">
+                        <br>
+                        <section class="unavailable hidden">
+                           <section class="form-group">
+                              <section class="col-sm-2"></section>
+                              <section class="col-sm-10 small-note">
+                                 <p>BIP141 is unavailable for this coin.</p>
+                              </section>
+                           </section>
+                        </section>
+                        <section class="available">
+                           <section class="col-sm-2"></section>
+                           <section class="col-sm-10 small-note">
+                              <p>
+                                 For more info see the
+                                 <a href="https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki" target="_blank">BIP141 spec</a>
+                              </p>
+                           </section>
+                           <section class="form-group">
+                              <label for="bip141-path" class="col-sm-12 control-label text-left">BIP32 Derivation Path</label>
+                              <section class="col-sm-12">
+                                 <input id="bip141-path" type="text" style="color:#e67e22" class="bip141-path form-control no-bg" value="m/0">
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label class="col-sm-3 control-label">Script Semantics</label>
+                              <section class="col-sm-9">
+                                 <select class="form-control bip141-semantics">
+                                    <option value="p2wpkh">P2WPKH</option>
+                                    <option value="p2wpkh-p2sh" selected>P2WPKH nested in P2SH</option>
+                                    <option value="p2wsh">P2WSH (1-of-1 multisig)</option>
+                                    <option value="p2wsh-p2sh">P2WSH nested in P2SH (1-of-1 multisig)</option>
+                                 </select>
+                              </section>
+                           </section>
+                        </section>
+                     </form>
+                  </section>
+                  <section id="bip84" class="tab-pane">
+                     <form class="form-horizontal" role="form">
+                        <br>
+                        <section class="unavailable hidden">
+                           <section class="form-group">
+                              <section class="col-sm-2"></section>
+                              <section class="col-sm-10">
+                                 <p>BIP84 is unavailable for this coin.</p>
+                              </section>
+                           </section>
+                        </section>
+                        <section class="available">
+                           <section class="col-sm-2"></section>
+                           <section class="col-sm-10 small-note">
+                              <p>
+                                 For more info see the
+                                 <a href="https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki" target="_blank">BIP84 spec</a>.
+                              </p>
+                           </section>
+                           <section class="form-group">
+                              <label for="bip84-path" class="col-sm-12 control-label text-left">BIP32 Derivation Path</label>
+                              <section class="col-sm-12">
+                                 <input id="bip84-path" type="text" style="color:#e67e22" class="path form-control no-bg" value="m/84'/0'/0'/0" readonly="readonly">
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="purpose-bip84" class="col-sm-3 control-label">
+                              Purpose
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="purpose-bip84" type="text" class="purpose form-control derivation-input" value="84" readonly>
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="coin-bip84" class="col-sm-3 control-label">
+                              Coin
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="coin-bip84" type="text" class="coin form-control derivation-input" value="0" readonly>
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="account-bip84" class="col-sm-3 control-label">
+                              Account
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="account-bip84" type="text" class="account form-control derivation-input" value="0">
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label for="change-bip84" class="col-sm-3 control-label">
+                              External / Internal
+                              </label>
+                              <section class="col-sm-9">
+                                 <input id="change-bip84" type="text" class="change form-control derivation-input" value="0">
+                              </section>
+                           </section>
+                           <section class="form-group">
+                              <label class="col-sm-1 control-label">
+                              </label>
+                              <section class="col-sm-10 small-note">
+                                 <p><i class="fas fa-info-circle"></i>&nbsp; The account extended keys can be used for importing to most BIP84 compatible wallets.</p>
+                              </section>
+                           </section>
+                           <hr/>
+                           <section class="form-group">
+                              <label for="account-xprv" class="col-sm-12 control-label text-left">
+                              <span>Account Extended Private Key</span>
+                              </label>
+                              <section class="col-sm-12">
+                                 <textarea id="account-xprv-bip84" type="text" class="account-xprv private-data form-control no-bg" readonly data-show-qr autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="height:auto;min-height: 90px; overflow:hidden;resize: none;font-size:13px;color:#bdc3c7" ></textarea>
+                              </section>
+                           </section>
+                           <hr/>
+                           <section class="form-group">
+                              <label for="account-xpub" class="col-sm-12 control-label text-left">
+                              <span>Account Extended Public Key</span>
+                              </label>
+                              <section class="col-sm-12">
+                                 <textarea id="account-xpub-bip84" type="text" class="account-xpub form-control no-bg" readonly data-show-qr autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="height:auto;min-height: 90px; overflow:hidden;resize: none;font-size:13px;color:#bdc3c7" ></textarea>
+                              </section>
+                           </section>
+                           <hr/>
+                        </section>
+                     </form>
+                  </section>
+               </section>
+            </section>
+            <!-- Mnemonic Seed input and wallet address output -->
+            <section class="col-md-9 main-body-content">
+               <section class="row">
+                  <section class="col-md-8">
+                     <h3 class="main-content-title"><i class="fas fa-search-dollar"></i>&nbsp; MNEMONIC SEED ANALYSER</h3>
+                  </section>
+                  <section class="col-md-4">
+                     <button class="btn export-button" onclick="createPDF()"><i class="fas fa-file-export"></i>&nbsp; Export Data (PDF)</button>
+                  </section>
+               </section>
+               <section class="section-container">
+                  <section class="col-md-12">
+                     <h3 class="section-title"><i class="fas fa-key"></i>&nbsp; Mnemonic Seed Input</h3>
+                  </section>
+                  <section class="col-md-12">
+                     <section class="row">
+                        <section class="col-md-8">
+                           <input type="text" id="phrase" placeholder="Enter the BIP39 Mnemonic Seed here" class="phrase private-data form-control mnemonic-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        </section>
+                        <section class="col-md-2">
+                           <select id="network-phrase" class="network form-control coin-select"></select>
+                        </section>
+                        <section class="col-md-2">
+                           <button class="btn search-button" onClick="blockchainSearch()"><i class="fas fa-search-dollar"></i>&nbsp; Fetch Balances</button>
+                        </section>
+                     </section>
+                  </section>
+               </section>
+               <section id="PDF-Export-Section">
+                  <section class="section-container">
+                     <h4 class="section-title"><i class="fas fa-list"></i>&nbsp; Search Results for:</h4>
+                     <h6 class="small-note" style="color:black;text-indent: 20px"><b>MNEMONIC SEED: </b> <span id="mnemonicseedentered" class="small-text"></span></h6>
+                     <h6 class="small-note" style="color:black;text-indent: 20px"><b>USING DERIVATION:</b> <span id="derivationUsed" class="small-text"></span> </h6>
+                     <h6 class="small-note" style="color:black;text-indent: 20px"><b>ON BLOCKCHAIN: </b> <span id="blockchainUsed" class="small-text"></h6>
+                  </section>
+                  <section class="section-container">
+                     <section class="col-md-8">
+                        <h4 class="section-title"><i class="fas fa-pound-sign"></i>&nbsp; Total Balances</h4>
+                     </section>
+                     <section class="row no-margin">
+                        <section class="col-md-12 bip-39-seed">
+                           <section class="col-md-3" style="border-right:1px solid #ccc">
+                              <h5 class="sub-title">WALLET BALANCE</h5>
+                              <h2 class="wallet-balance" id="total_balance">----</h2>
+                           </section>
+                           <section class="col-md-3" style="border-right:1px solid #ccc">
+                              <h5 class="sub-title">MONEY IN</h5>
+                              <h2 class="wallet-balance" id="total_received">----</h2>
+                           </section>
+                           <section class="col-md-3" style="border-right:1px solid #ccc">
+                              <h5 class="sub-title">MONEY OUT</h5>
+                              <h2 class="wallet-balance" id="total_sent">----</h2>
+                           </section>
+                           <section class="col-md-3">
+                              <h5 class="sub-title">
+                                 <ion-icon name="heart"></ion-icon>
+                                 ADDRESSES
+                              </h5>
+                              <h2 class="wallet-balance" id="address_count">----</h2>
+                           </section>
+                        </section>
+                     </section>
+                  </section>
+                  <!---------- Addresses and Transactions ---------->
+                  <section class="section-container">
+                     <section class="col-md-12 addresses-output">
+                        <h3 class="section-title"><i class="fas fa-wallet"></i>&nbsp; Known Wallet Addresses</h3>
+                        <section id="addresses-output-container">
+                           <section class="loader" id="loader"></section>
+                           <section id="address-output">
+                              <p class="no-info">No data available. Enter a mnemonic seed and search the blockchain to retrieve results</p>
+                           </section>
+                           <input type="number" class="rows-to-add" value="20" style="display:none">
+                        </section>
+                     </section>
+                  </section>
+               </section>
+             
+            </section>
+         </section>
+      </section>
+
+      <script src="js/blockchain.js"></script>
+      <script src="js/jquery-3.2.1.js"></script>
+      <script src="js/bootstrap.js"></script>
+      <script src="js/bip39-libs.js"></script>
+      <script src="js/bitcoinjs-extensions.js"></script>
+      <script src="js/segwit-parameters.js"></script>
+      <script src="js/sjcl-bip39.js"></script>
+      <script src="js/wordlist_english.js"></script>
+      <script src="js/jsbip39.js"></script>
+      <script src="js/entropy.js"></script>
+      <script src="js/index.js"></script>
+      <script src="js/html2pdf.bundle.min.js"></script>
+   </body>
+</html>
